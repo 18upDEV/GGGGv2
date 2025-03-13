@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch, ref } from 'vue'
+import { computed, watch, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import BaseButton from '../components/BaseButton.vue'
 import BasePlayerListItem from '../components/BasePlayerListItem.vue'
@@ -19,7 +19,8 @@ import {
 import type { GamePlayer } from '../model'
 
 const router = useRouter()
-const showResults = ref(false) // เพิ่ม state เพื่อตรวจสอบการแสดงผล
+const showResults = ref(false)
+const localVoteResults = ref<Record<string, number>>({})
 
 const currentVotingPlayers = computed(() =>
   secondVotingPlayers.value.length > 0
@@ -33,15 +34,24 @@ const disabledSubmit = computed(() => !selectedPlayer.value || isSubmittedVotePl
 
 watch(gameStatus, () => {
   if (gameStatus.value === 'gameResultPhase') {
-    showResults.value = true // กำหนดให้แสดงผลลัพธ์เมื่อถึงเฟสผลลัพธ์
+    showResults.value = true
+    localVoteResults.value = { ...voteResults.value } // ดึงข้อมูลผลโหวตมาก่อนเปลี่ยนหน้า
     router.push('/results')
+  }
+})
+
+onMounted(() => {
+  if (gameStatus.value === 'gameResultPhase') {
+    showResults.value = true
+    localVoteResults.value = { ...voteResults.value }
   }
 })
 
 const submitVote = () => {
   if (!selectedPlayer.value) return
   sendDataToRoomLeader({ type: 'vote', target: selectedPlayer.value })
-  showResults.value = true // อัปเดตให้แสดงผลทันทีหลังโหวต
+  showResults.value = true
+  localVoteResults.value = { ...voteResults.value }
 }
 </script>
 
@@ -60,7 +70,7 @@ const submitVote = () => {
     <div v-else>
       <h2>Voting Results</h2>
       <ul>
-        <li v-for="(count, player) in voteResults" :key="player">
+        <li v-for="(count, player) in localVoteResults" :key="player">
           {{ player }}: {{ count }} votes
         </li>
       </ul>
