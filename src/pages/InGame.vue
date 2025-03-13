@@ -50,7 +50,8 @@ function finishGame() {
 
 <template>
   <div class="text-4xl">
-    <span v-if="myRole === '🤴leader🤴" class="font-bold">
+    <span v-if="myRole === '🤴leader🤴'" class="font-bold">
+
       Tell Your Friends,
     </span>
     You are
