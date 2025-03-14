@@ -52,6 +52,9 @@ function handleNewGame() {
 
   <div class="flex w-full max-w-xs flex-col gap-4 pt-4">
     <div>
+      <template>
+  <div>
+    <div>
       Voting Result
     </div>
 
@@ -71,4 +74,28 @@ function handleNewGame() {
   <BaseButton class="mt-4" @click="handleNewGame">
     New Game
   </BaseButton>
+  <BaseButton class="mt-4" @click="goToGameRoom">
+    Back to Game Room
+  </BaseButton>
 </template>
+
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import BasePlayerListItem from '../components/BasePlayerListItem.vue'
+
+const router = useRouter()
+const votingResultPlayers = ref([]) // Assuming you have this data
+
+const handleNewGame = () => {
+  // Logic for starting a new game
+}
+
+const goToGameRoom = () => {
+  router.push({ name: 'game-room' })
+}
+</script>
+
+<style scoped>
+/* Add your styles here if needed */
+</style>
