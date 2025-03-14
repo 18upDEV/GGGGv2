@@ -81,15 +81,15 @@ function finishGame() {
     </template>
     <template v-else-if="myRole === 'insider'">
       <div class="text-center">
-        Hint your villagers to know the answer
+        ทำให้เพื่อนๆ รู้ว่ามันคือคำนี้
       </div>
       <div class="text-center font-bold uppercase">
-        Don't let them know who you are
+        อย่าให้เพื่อนๆ รู้ว่าคุณคือ INSIDER
       </div>
     </template>
     <template v-else-if="myRole === 'villager'">
       <div class="text-center">
-        Find the answer from leader
+        หาคำตอบจาก Leader
       </div>
       <div class="text-center">
         And find <span class="text-primary">INSIDER</span> among you
