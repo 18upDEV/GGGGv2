@@ -48,8 +48,7 @@ function handleNewGame() {
     >
       {{ insiderPlayer.playerName }}
     </div>
-  </template>
-
+    <template>
   <div class="flex w-full max-w-xs flex-col gap-4 pt-4">
     <div>
       Voting Result
@@ -66,9 +65,52 @@ function handleNewGame() {
         {{ player.votingPlayers.map((player) => player.playerName).join(', ') }}
       </div>
     </div>
-  </div>
 
-  <BaseButton class="mt-4" @click="handleNewGame">
-    New Game
-  </BaseButton>
+    <BaseButton class="mt-4" @click="playAgain">
+      Play Again
+    </BaseButton>
+    <BaseButton class="mt-4" @click="goToGameRoom">
+      Back to Game Room
+    </BaseButton>
+  </div>
 </template>
+
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import { players, votingPlayers, gameStatus, gameAnswer, gameResult, isSubmittedVotePlayer, selectedPlayer, secondVotingPlayers } from '../store'
+import BasePlayerListItem from '../components/BasePlayerListItem.vue'
+
+const router = useRouter()
+const votingResultPlayers = ref([]) // สมมติว่าคุณมีข้อมูลนี้
+
+const playAgain = () => {
+  // รีเซ็ตสถานะที่จำเป็นสำหรับการเล่นเกมใหม่ในห้องเดิม
+  votingPlayers.value = []
+  selectedPlayer.value = null
+  secondVotingPlayers.value = []
+  gameStatus.value = 'waiting' // หรือสถานะที่เหมาะสมสำหรับการเริ่มเกมใหม่
+  gameAnswer.value = ''
+  gameResult.value = null
+  isSubmittedVotePlayer.value = false
+
+  // คุณสามารถเพิ่มลอจิกเพิ่มเติมที่จำเป็นสำหรับการเริ่มเกมใหม่ที่นี่
+  router.push({ name: 'game-room' })
+}
+
+const goToGameRoom = () => {
+  // รีเซ็ตสถานะที่จำเป็น
+  players.value = []
+  votingPlayers.value = []
+  gameStatus.value = null
+  gameAnswer.value = ''
+  gameResult.value = null
+  isSubmittedVotePlayer.value = false
+
+  router.push({ name: 'game-room' })
+}
+</script>
+
+<style scoped>
+/* เพิ่มสไตล์ของคุณที่นี่ถ้าจำเป็น */
+</style>
