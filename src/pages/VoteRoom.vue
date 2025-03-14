@@ -47,7 +47,7 @@ function votingPlayerActive(player: GamePlayer) {
   </div>
 
   <div class="text-4xl font-bold">
-    Who is the <span class="font-bold text-primary">INSIDER!</span>
+    Who is the <span class="font-bold text-primary">INSIDER</span>
   </div>
 
   <div v-if="secondVotingPlayers.length" class="text-4xl">

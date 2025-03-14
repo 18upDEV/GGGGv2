@@ -50,8 +50,7 @@ function finishGame() {
 
 <template>
   <div class="text-4xl">
-    <span v-if="myRole === '🤴leader🤴'" class="font-bold">
-
+    <span v-if="myRole === 'leader'" class="font-bold">
       Tell Your Friends,
     </span>
     You are
@@ -68,7 +67,7 @@ function finishGame() {
   </div>
 
   <div class="flex flex-col pt-4">
-    <template v-if="myRole === '🤴leader🤴'">
+    <template v-if="myRole === 'leader'">
       <div class="text-center">
         Hint your villagers to know the answer
       </div>
@@ -80,7 +79,7 @@ function finishGame() {
         or <span class="font-bold">"Correct"</span>
       </div>
     </template>
-    <template v-else-if="myRole === '🕵️‍♂️insider🕵️‍♂️'">
+    <template v-else-if="myRole === 'insider'">
       <div class="text-center">
         Hint your villagers to know the answer
       </div>
@@ -88,7 +87,7 @@ function finishGame() {
         Don't let them know who you are
       </div>
     </template>
-    <template v-else-if="myRole === '🤦‍♂️villager🤦‍♂️'">
+    <template v-else-if="myRole === 'villager'">
       <div class="text-center">
         Find the answer from leader
       </div>
@@ -100,7 +99,7 @@ function finishGame() {
 
   <template v-if="timer > 0">
     <div class="pt-4 text-4xl">
-      {{ getPadStartText(hour) }}⌛:⏳{{ getPadStartText(minute) }}
+      {{ getPadStartText(hour) }}:{{ getPadStartText(minute) }}
     </div>
 
     <BaseButton v-if="myRole === 'leader'" @click="finishGame">
