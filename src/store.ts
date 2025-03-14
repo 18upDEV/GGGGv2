@@ -4,8 +4,6 @@ import { computed, ref } from 'vue'
 import useGame from './useGame'
 import type { GamePlayer, GameResult, GameSendingData, GameStatus } from './model'
 
-// Duplicate function removed
-
 const gameId = ref(makeid(4).toUpperCase())
 
 const { playerName } = useGame()
@@ -98,7 +96,7 @@ myPeer.on('connection', (conn) => {
     }
     if (peerData.type === 'playerReady') {
       const playerIndex = findPlayerIndexByPeer(players.value, conn.peer)
-        playerName: peerData.playerName || '',
+      players.value[playerIndex].isReady = !!peerData.message
       broadcastPeers({ type: 'changePlayers', players: players.value }, [conn.peer])
     }
     else if (peerData.type === 'changePlayers') {
@@ -112,7 +110,7 @@ myPeer.on('connection', (conn) => {
       selectedPlayer.value = null
       secondVotingPlayers.value = [...peerData.players]
     }
-      players.value = [...(peerData.players || [])]
+    else if (peerData.type === 'startGame') {
       gameStatus.value = 'gameStart'
     }
     else if (peerData.type === 'giveAnswer') {
@@ -126,15 +124,15 @@ myPeer.on('connection', (conn) => {
       const peer = conn.peer
       const playerName = players.value.find(player => player.peer === peer).playerName
 
-      gameAnswer.value = peerData.message?.toString() || ''
+      if (players.value[playerIndex].votingPlayers) {
         players.value[playerIndex].votingPlayers.push(
           {
             peer,
             playerName,
           },
-      const playerIndex = players.value.findIndex(player => player.peer === peerData.player?.peer)
+        )
       }
-      const playerName = players.value.find(player => player.peer === peer)?.playerName || ''
+
       else {
         players.value[playerIndex].votingPlayers = [
           {
@@ -234,23 +232,23 @@ function getHighestVotePlayers(players: GamePlayer[]) {
 function submitResultGame() {
   const highestVotePlayer = players.value.reduce(
     (acc, cur) => {
-    if (player.votingPlayers && player.votingPlayers.length > highestVoteCount)
-      highestVoteCount = player.votingPlayers?.length || 0
+      if (acc === null || !acc.votingPlayers)
+        return cur
 
       if (!cur.votingPlayers)
-  return votedPlayers.filter(player => player.votingPlayers?.length === highestVoteCount)
+        return acc
 
       return cur.votingPlayers.length > acc.votingPlayers.length ? cur : acc
     }, null)
 
-    (acc: GamePlayer | null, cur: GamePlayer) => {
-      if (acc === null || !acc.votingPlayers || !cur.votingPlayers)
+  if (highestVotePlayer.role === 'insider') {
+    winnerSide.value = 'villager'
     broadcastVillagers({
       type: 'gameResultPhase',
       gameResult: 'win',
       players: players.value,
     })
-      return (cur.votingPlayers?.length || 0) > (acc.votingPlayers?.length || 0) ? cur : acc
+    sendGameDataToPeer(
       insiderPlayer.value.peer,
       { type: 'gameResultPhase', gameResult: 'lose', players: players.value },
     )
@@ -261,7 +259,7 @@ function submitResultGame() {
       insiderPlayer.value.peer,
       { type: 'gameResultPhase', gameResult: 'win', players: players.value },
     )
-      insiderPlayer.value?.peer || '',
+    broadcastVillagers({
       type: 'gameResultPhase',
       gameResult: 'lose',
       players: players.value,
@@ -292,9 +290,7 @@ export function sendGameDataToPeer(peer: DataConnection['peer'], data: GameSendi
     newPeer.send({
       ...data,
       playerName: data.playerName || playerName.value,
-  if (roomLeaderConn.value) {
-    sendGameDataToPeer(roomLeaderConn.value.peer, data)
-  }
+    })
   })
 }
 
