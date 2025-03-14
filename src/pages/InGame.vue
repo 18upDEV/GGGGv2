@@ -100,7 +100,7 @@ function finishGame() {
 
   <template v-if="timer > 0">
     <div class="pt-4 text-4xl">
-      {{ getPadStartText(hour) }}:{{ getPadStartText(minute) }}
+      {{ getPadStartText(hour) }}⌛:⏳{{ getPadStartText(minute) }}
     </div>
 
     <BaseButton v-if="myRole === 'leader'" @click="finishGame">
