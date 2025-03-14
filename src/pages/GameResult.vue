@@ -54,6 +54,24 @@ function handleNewGame() {
     <div>
       Voting Result
     </div>
+    <template>
+  ...
+  <div v-if="isMyRoleInsider" class="text-4xl">
+    {{ gameResult === 'win' ? 'You are disguised from Villagers.' : 'You have been found.' }}
+  </div>
+  <template v-else>
+    <div class="text-4xl font-bold uppercase">
+      The <span class="font-bold text-primary">INSIDER</span> is
+    </div>
+
+    <div
+      class="mt-4 w-full max-w-xs rounded-xl border-2 border-dashed border-primary p-4 text-center text-6xl text-white"
+    >
+      {{ insiderPlayer?.playerName || 'Unknown' }}
+    </div>
+  </template>
+  ...
+</template>
 
     <div v-for="player of votingResultPlayers" :key="player.peer" class="flex flex-col gap-1">
       <BasePlayerListItem :player="player">
