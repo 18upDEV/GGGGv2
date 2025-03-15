@@ -97,6 +97,15 @@ function finishGame() {
     </template>
   </div>
 
+  <div class="mt-4">
+    <div class="text-2xl font-bold">Players:</div>
+    <ul>
+      <li v-for="player in players" :key="player.peer">
+        {{ player.playerName }}
+      </li>
+    </ul>
+  </div>
+
   <template v-if="timer > 0">
     <div class="pt-4 text-4xl">
       {{ getPadStartText(hour) }}:{{ getPadStartText(minute) }}
