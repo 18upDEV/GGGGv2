@@ -68,7 +68,7 @@ function finishGame() {
 
 <!-- Add your image here -->
 <div class="mt-4">
-  <img src="@/assets/126152.jpg" alt="Description of the image" class="w-full max-w-xs rounded-xl">
+  <img src="@/assets/your-image.png" alt="Description of the image" class="w-full max-w-xs rounded-xl">
 </div>
 
 
