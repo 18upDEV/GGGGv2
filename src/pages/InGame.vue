@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router'
 import { useIntervalFn, useTimeoutFn } from '@vueuse/core'
 import { broadcastPeers, gameAnswer, gameStatus, myRole, players, votingPlayers } from '../store'
 import BaseButton from '../components/BaseButton.vue'
+// Import the image
+import imagePath from '@/assets/126152.jpg'
 
 const timer = ref(300)
 
