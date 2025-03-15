@@ -99,7 +99,7 @@ function finishGame() {
 
   <div class="mt-4 p-4 border-2 border-dashed border-primary rounded-xl">
     <div class="text-2xl font-bold">Players:</div>
-    <ul>
+    <ul class="text-left">
       <li v-for="player in players" :key="player.peer">
         {{ player.playerName }}
       </li>
