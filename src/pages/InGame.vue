@@ -4,8 +4,8 @@ import { useRouter } from 'vue-router'
 import { useIntervalFn, useTimeoutFn } from '@vueuse/core'
 import { broadcastPeers, gameAnswer, gameStatus, myRole, players, votingPlayers } from '../store'
 import BaseButton from '../components/BaseButton.vue'
-// Import the image using a relative path
-import imagePath from '../assets/126152.jpg'
+// Import the image
+import imagePath from '@/assets/126152.jpg'
 
 const timer = ref(300)
 
@@ -70,8 +70,10 @@ function finishGame() {
 
   <!-- Add your image here -->
   <div class="mt-4">
-    <img :src="imagePath" alt="Description of the image" class="w-full max-w-xs rounded-xl">
-  </div>
+  <img src="../assets/126152.jpg" alt="Description of the image" class="w-full max-w-xs rounded-xl">
+</div>
+
+
 
   <div class="flex flex-col pt-4">
     <template v-if="myRole === 'leader'">
