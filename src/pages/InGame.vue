@@ -100,7 +100,7 @@ function finishGame() {
   <div class="mt-4 p-4 border-2 border-dashed border-primary rounded-xl">
     <div class="text-2xl font-bold">Players:</div>
     <ul class="text-left">
-      <li v-for="player in players" In This Round ! key="player.peer">
+      <li v-for="player in players" : key="player.peer">
         {{ player.playerName }}
       </li>
     </ul>
