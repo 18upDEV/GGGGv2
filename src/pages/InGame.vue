@@ -66,6 +66,12 @@ function finishGame() {
     {{ gameAnswer }}
   </div>
 
+<!-- Add your image here -->
+<div class="mt-4">
+  <img src="@/assets/your-image.png" alt="Description of the image" class="w-full max-w-xs rounded-xl">
+</div>
+
+
   <div class="flex flex-col pt-4">
     <template v-if="myRole === 'leader'">
       <div class="text-center">
